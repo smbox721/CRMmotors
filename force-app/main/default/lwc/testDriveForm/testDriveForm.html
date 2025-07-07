@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="시승 신청">
+        <div class="slds-p-around_medium">
+            <lightning-input label="고객 이름" onchange={handleInputChange} data-id="customerName"></lightning-input>
+            <lightning-combobox
+            label="차량 모델"
+            value={carModel}
+            options={carModelOptions}
+            onchange={handleInputChange}
+            data-id="carModel">
+            </lightning-combobox> 
+            <lightning-input type="date" label="시승 일자" onchange={handleInputChange} data-id="driveDate"></lightning-input>
+            <lightning-input type="time" label="시승 시간" onchange={handleInputChange} data-id="driveTime"></lightning-input>
+
+            <lightning-button label="신청 저장" onclick={handleSave} variant="brand" class="slds-m-top_medium"></lightning-button>
+        </div>
+    </lightning-card>
+</template>
