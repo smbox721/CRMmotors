@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>crmfarm_d2779a325e</members>
+        <name>ExperienceBundle</name>
+    </types>
+    <types>
+        <members>crmfarm_d2779a325e</members>
+        <name>CustomSite</name>
+    </types>
+    <version>59.0</version>
+</Package>
