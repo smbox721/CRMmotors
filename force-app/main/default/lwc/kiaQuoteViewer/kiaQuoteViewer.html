@@ -1,0 +1,78 @@
+<template>
+    <lightning-card title="실시간 최종 견적서" icon-name="standard:document">
+        <template if:true={quoteData}>
+            <div class="quote-container slds-p-around_medium">
+                
+                <div class="slds-m-bottom_medium">
+                    <h2 class="slds-text-heading_medium slds-border_bottom">차량 기본 정보</h2>
+                    <div class="slds-grid slds-p-top_small">
+                        <div class="slds-col slds-size_1-of-4 label">차명</div>
+                        <div class="slds-col slds-size_3-of-4">{baseCarName}</div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-4 label">외장색상</div>
+                        <div class="slds-col slds-size_3-of-4">{exteriorColor}</div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-4 label">내장색상</div>
+                        <div class="slds-col slds-size_3-of-4">{interiorColor}</div>
+                    </div>
+                </div>
+
+                <div class="slds-m-bottom_medium">
+                    <h2 class="slds-text-heading_medium slds-border_bottom">판매 가격</h2>
+                    <div class="slds-grid slds-p-top_small">
+                        <div class="slds-col slds-size_3-of-4 label">차량 기본 가격</div>
+                        <div class="slds-col slds-size_1-of-4 slds-text-align_right">
+                            <lightning-formatted-number value={baseCarPrice} format-style="currency" currency-code="KRW" maximum-fraction-digits="0"></lightning-formatted-number>
+                        </div>
+                    </div>
+                    <h3 class="slds-p-top_small label">선택 품목</h3>
+                    <template for:each={options} for:item="option">
+                        <div class="slds-grid" key={option.Id}>
+                            <div class="slds-col slds-size_3-of-4 slds-p-left_large">{option.PricebookEntry.Product2.Name}</div>
+                            <div class="slds-col slds-size_1-of-4 slds-text-align_right">
+                                <lightning-formatted-number value={option.TotalPrice} format-style="currency" currency-code="KRW" maximum-fraction-digits="0"></lightning-formatted-number>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div>
+                    <h2 class="slds-text-heading_medium slds-border_bottom">최종 견적 금액</h2>
+                    <div class="slds-grid slds-p-top_small">
+                        <div class="slds-col slds-size_3-of-4 label">차량 가격</div>
+                        <div class="slds-col slds-size_1-of-4 slds-text-align_right">
+                            <lightning-formatted-number value={opportunityAmount} format-style="currency" currency-code="KRW" maximum-fraction-digits="0"></lightning-formatted-number>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_3-of-4 label">탁송료</div>
+                        <div class="slds-col slds-size_1-of-4 slds-text-align_right">
+                            <lightning-formatted-number value={shippingFee} format-style="currency" currency-code="KRW" maximum-fraction-digits="0"></lightning-formatted-number>
+                        </div>
+                    </div>
+                     <div class="slds-grid">
+                        <div class="slds-col slds-size_3-of-4 label">등록 부대 비용</div>
+                        <div class="slds-col slds-size_1-of-4 slds-text-align_right">
+                            <lightning-formatted-number value={registrationFee} format-style="currency" currency-code="KRW" maximum-fraction-digits="0"></lightning-formatted-number>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-p-top_small total-line">
+                        <div class="slds-col slds-size_3-of-4 label slds-text-heading_small">총 구매 비용</div>
+                        <div class="slds-col slds-size_1-of-4 slds-text-align_right slds-text-heading_small">
+                            <lightning-formatted-number value={totalPurchaseCost} format-style="currency" currency-code="KRW" maximum-fraction-digits="0"></lightning-formatted-number>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </template>
+        <template if:true={error}>
+            <p class="slds-p-around_medium">데이터를 불러오는 중 오류가 발생했습니다.</p>
+        </template>
+        <template if:false={quoteData}>
+            <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

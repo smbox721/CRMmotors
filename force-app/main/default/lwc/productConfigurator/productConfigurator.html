@@ -1,0 +1,67 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+            <lightning-progress-indicator current-step={currentStepValue} type="path" variant="base">
+                <lightning-progress-step label="모델 선택" value="step1"></lightning-progress-step>
+                <lightning-progress-step label="트림 선택" value="step2"></lightning-progress-step>
+                <lightning-progress-step label="색상 선택" value="step3"></lightning-progress-step>
+                <lightning-progress-step label="옵션 선택" value="step4"></lightning-progress-step>
+                <lightning-progress-step label="최종 확인" value="step5"></lightning-progress-step>
+            </lightning-progress-indicator>
+        </div>
+        
+        <div class="slds-p-around_medium" style="min-height: 300px;">
+            <template if:true={isStep1}>
+                <h2 class="slds-text-heading_medium slds-m-bottom_medium">1. 모델 선택</h2>
+                <lightning-radio-group name="baseModels"
+                                       label="차량 모델을 선택하세요"
+                                       options={baseModelOptions}
+                                       onchange={handleSelection}
+                                       type="radio"
+                                       required></lightning-radio-group>
+            </template>
+
+            <template if:true={isStep2}>
+                <h2 class="slds-text-heading_medium slds-m-bottom_medium">2. 트림 선택</h2>
+                <lightning-radio-group name="trims"
+                                       label="트림을 선택하세요"
+                                       options={trimOptions}
+                                       onchange={handleSelection}
+                                       type="radio"
+                                       required></lightning-radio-group>
+            </template>
+
+            <template if:true={isStep3}>
+                <h2 class="slds-text-heading_medium slds-m-bottom_medium">3. 색상 선택</h2>
+                <p>... 색상 선택 기능이 여기에 구현됩니다 ...</p>
+            </template>
+            
+            <template if:true={isStep4}>
+                <h2 class="slds-text-heading_medium slds-m-bottom_medium">4. 옵션 선택</h2>
+                 <lightning-checkbox-group name="options"
+                                           label="옵션을 모두 선택하세요"
+                                           options={optionOptions}
+                                           value={selectedOptionIds}
+                                           onchange={handleOptionSelection}></lightning-checkbox-group>
+            </template>
+
+            <template if:true={isStep5}>
+                <h2 class="slds-text-heading_medium slds-m-bottom_medium">5. 최종 확인</h2>
+                <p><strong>모델:</strong> {selectedModelName}</p>
+                <p><strong>트림:</strong> {selectedTrimName}</p>
+                <p><strong>선택 옵션:</strong></p>
+                <ul class="slds-list_dotted">
+                    <template for:each={finalOptions} for:item="opt">
+                        <li key={opt.value}>{opt.label}</li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+
+        <div slot="footer" class="slds-clearfix">
+            <lightning-button label="이전" onclick={handlePrevious} if:false={isStep1} class="slds-float_left"></lightning-button>
+            <lightning-button label="다음" onclick={handleNext} if:false={isStep5} variant="brand" class="slds-float_right"></lightning-button>
+            <lightning-button label="견적에 추가" onclick={handleSave} if:true={isStep5} variant="brand" class="slds-float_right" disabled={isSaving}></lightning-button>
+        </div>
+    </lightning-card>
+</template>

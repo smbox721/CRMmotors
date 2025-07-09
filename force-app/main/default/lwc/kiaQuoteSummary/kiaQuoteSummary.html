@@ -1,0 +1,83 @@
+<template>
+    <!-- 전체를 감싸는 컨테이너 -->
+    <div class="container slds-p-around_large">
+        <div class="slds-text-align_center slds-m-bottom_large">
+            <lightning-icon icon-name="utility:check" size="large" variant="success"></lightning-icon>
+            <h1 class="slds-text-heading_large slds-m-top_medium">고객님의 {carLabel} 견적이 완성되었습니다.</h1>
+        </div>
+
+        <!-- 메인 콘텐츠 영역 (왼쪽: 가격 정보, 오른쪽: 차량 요약) -->
+        <lightning-layout multiple-rows="true">
+            <!-- 왼쪽 가격 정보 컬럼 -->
+            <lightning-layout-item size="7" medium-size="7" padding="around-medium">
+                
+                <!-- 아코디언 컴포넌트로 펼치기/접기 기능 구현 -->
+                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                    
+                    <!-- 차량 가격 섹션 -->
+                    <lightning-accordion-section name="vehiclePrice" label="차량 가격">
+                        <div slot="actions">
+                            <span class="slds-text-heading_small slds-p-right_medium">{totalPrice} 원</span>
+                        </div>
+                        <!-- 펼쳤을 때 보이는 내용 -->
+                        <div class="slds-p-horizontal_medium">
+                            <div class="slds-grid slds-m-bottom_small">
+                                <div class="slds-col">{selectedTrim}</div>
+                                <div class="slds-col slds-text-align_right">{price} 원</div>
+                            </div>
+                            <div class="slds-grid slds-m-bottom_small">
+                                <div class="slds-col">{selectedColor}</div>
+                                <div class="slds-col slds-text-align_right">0 원</div>
+                            </div>
+                            
+                                <template if:true={optionPriceList}>
+                                    <template for:each={optionPriceList} for:item="opt">
+                                        <div key={opt.name} class="slds-grid slds-m-bottom_xx-small">
+                                            <div class="slds-col">{opt.name}</div>
+                                            <div class="slds-col slds-text-align_right">{opt.price} 원</div>
+                                            <br>
+                                        </div>
+                                        
+                                    </template>
+                                </template>    
+                            
+                        </div>
+                    </lightning-accordion-section>
+                    
+                    <!-- 탁송 섹션 -->
+                    <lightning-accordion-section name="shipping" label="탁송">
+                        <div slot="actions">
+                            <span class="slds-text-heading_small slds-p-right_medium">175,000 원</span>
+                        </div>
+                        <!-- 펼쳤을 때 보이는 내용 (필요시 추가) -->
+                    </lightning-accordion-section>
+
+                    
+
+                </lightning-accordion>
+
+                <!-- 결제 금액 -->
+                <div class="slds-grid slds-p-vertical_medium total-line">
+                    <div class="slds-col"><span class="slds-text-heading_medium">결제 금액</span></div>
+                    <div class="slds-col slds-text-align_right"><span class="slds-text-heading_medium">{totalPrice} 원</span></div>
+                </div>
+
+            </lightning-layout-item>
+
+            <!-- 오른쪽 차량 요약 컬럼 -->
+            <lightning-layout-item size="5" medium-size="5" padding="around-medium">
+                <div class="summary-card">
+                    <div class="car-title">{carLabel}</div>
+                    <div class="car-trim">{selectedTrim}</div>
+                    <img src={carImage} alt="차량 이미지" class="car-image"/>
+                    <div class="car-options">{selectedOptionsText}</div>
+                    <div class="button-container">
+                        <lightning-button label="견적 저장" class="black-btn slds-m-bottom_small" onclick={handleSaveQuote}></lightning-button>
+                        <lightning-button label="시승 신청" variant="brand" onclick={handleDriveRequest}></lightning-button>
+                    </div>
+                </div>
+            </lightning-layout-item>
+
+        </lightning-layout>
+    </div>
+</template>

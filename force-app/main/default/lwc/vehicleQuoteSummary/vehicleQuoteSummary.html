@@ -1,0 +1,34 @@
+<template>
+    <div class="quote-container">
+        <div class="price-section">
+            <span class="label">차량 가격</span>
+            <span class="price">{carPrice}원</span>
+            <button class="expand-btn" onclick={toggleDetails}>
+                <lightning-icon icon-name={expandIcon} size="small"></lightning-icon>
+            </button>
+        </div>
+        <template if:true={showDetails}>
+            <div class="details-section">
+                <div><b>모델:</b> {model}</div>
+                <div><b>트림:</b> {trim}</div>
+                <div><b>외장 컬러:</b> {colorExterior}</div>
+                <div><b>내장 컬러:</b> {colorInterior}</div>
+                <div><b>선택 옵션:</b>
+                    <ul>
+                        <template for:each={options} for:item="opt">
+                            <li key={opt}>{opt}</li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </template>
+        <div class="summary-section">
+            <img src={carImageUrl} alt="차량 이미지" class="car-image"/>
+            <div class="summary-info">
+                <div>{model} {trim}</div>
+                <div>결제 금액: {totalPrice}원</div>
+                <div>등록비: {registrationFee}원</div>
+            </div>
+        </div>
+    </div>
+</template>
